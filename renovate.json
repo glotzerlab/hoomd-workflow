@@ -3,6 +3,7 @@
   "extends": [
     "local>glotzerlab/renovate-config"
   ],
+  "packageRules": [
     {
       "matchManagers": ["cargo"],
       "matchPackageNames": ["parquet*"],
