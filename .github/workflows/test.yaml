@@ -23,26 +23,23 @@ env:
 
 jobs:
   test:
-    name: Test [${{ matrix.mode }}-rust-${{ matrix.rust }}-${{ matrix.os }}]
-    runs-on: ${{ matrix.os }}
+    name: Test [rust-${{ matrix.rust }}]
+    runs-on: ubuntu-24.04
     strategy:
       matrix:
-        os:
-          - ubuntu-24.04
-          # - macos-14
         rust:
           - 1.94.0
 
     steps:
     - name: Checkout
-      uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+      uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
     - name: Configure Rust
       id: rust_toolchain
-      uses: dtolnay/rust-toolchain@f7ccc83f9ed1e5b9c81d8a67d7ad1a747e22a561
+      uses: dtolnay/rust-toolchain@efa25f7f19611383d5b0ccf2d1c8914531636bf9
       with:
         toolchain: ${{ matrix.rust }}
     - name: Cache
-      uses: Swatinem/rust-cache@779680da715d629ac1d338a641029a2f4372abb5 # v2.8.2
+      uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
       with:
         cache-bin: false
     - name: Build
