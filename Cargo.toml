@@ -1,5 +1,5 @@
 [package]
-name = "project"
+name = "hoomd-workflow"
 edition = "2024"
 
 [dependencies]
