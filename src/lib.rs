@@ -4,3 +4,4 @@ mod state_point;
 
 pub use state_point::StatePoint;
 pub use model::LennardJonesModel;
+pub use simulate::simulate_one;
