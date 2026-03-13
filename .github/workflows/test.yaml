@@ -1,0 +1,60 @@
+name: test
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+on:
+  pull_request:
+  push:
+    branches:
+    - trunk
+
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash
+
+env:
+  CARGO_TERM_COLOR: always
+  ROW_COLOR: always
+  CLICOLOR: 1
+
+jobs:
+  test:
+    name: Test [${{ matrix.mode }}-rust-${{ matrix.rust }}-${{ matrix.os }}]
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os:
+          - ubuntu-24.04
+          # - macos-14
+        rust:
+          - 1.94.0
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+    - name: Configure Rust
+      id: rust_toolchain
+      uses: dtolnay/rust-toolchain@f7ccc83f9ed1e5b9c81d8a67d7ad1a747e22a561
+      with:
+        toolchain: ${{ matrix.rust }}
+    - name: Cache
+      uses: Swatinem/rust-cache@779680da715d629ac1d338a641029a2f4372abb5 # v2.8.2
+      with:
+        cache-bin: false
+    - name: Build
+      run: cargo build --verbose
+
+  tests_complete:
+    name: All tests
+    if: always()
+    needs: [test]
+    runs-on: ubuntu-24.04
+
+    steps:
+    - run: jq --exit-status 'all(.result == "success")' <<< '${{ toJson(needs) }}'
+    - name: Done
+      run: exit 0
