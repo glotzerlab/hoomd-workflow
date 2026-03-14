@@ -1,6 +1,10 @@
 use anyhow::{Context, anyhow};
 use hoomd_geometry::{Volume, shape::Cuboid};
-use hoomd_interaction::{MaximumInteractionRange, PairwiseCutoff, pairwise::Isotropic, univariate::{Expanded, LennardJones, OverlapPenalty}};
+use hoomd_interaction::{
+    MaximumInteractionRange, PairwiseCutoff,
+    pairwise::Isotropic,
+    univariate::{Expanded, LennardJones, OverlapPenalty},
+};
 use hoomd_mc::{Count, QuickCompress, QuickInsert, Sweep, Translate, Trial, Tune, UniformIn};
 use hoomd_microstate::{Microstate, SiteKey, boundary::Periodic, property::Point};
 use hoomd_simulation::{Simulation, macrostate::Isothermal};
@@ -20,7 +24,7 @@ type SiteProperties = Point<PositionVector>;
 type Boundary = Periodic<Cuboid>;
 
 #[derive(Serialize, Deserialize)]
-enum Phase {
+pub enum Phase {
     Initialize,
     Equilibrate,
 }
@@ -28,20 +32,18 @@ enum Phase {
 /// The Lennard-Jones simulation model.
 #[derive(Serialize, Deserialize)]
 pub struct LennardJonesModel {
-    microstate: Microstate<BodyProperties, SiteProperties, VecCell<SiteKey, 3>, Boundary>,
-    translate_sweep: Sweep<Translate<PositionVector>>,
-    hamiltonian: PairwiseCutoff<Isotropic<LennardJones>>,
-    quick_insert: QuickInsert<UniformIn<SiteProperties, Boundary>>,
-    quick_compress: QuickCompress<Boundary>,
-    overlap_penalty_hamiltonian:
-        PairwiseCutoff<Isotropic<Expanded<OverlapPenalty>>>,
-    macrostate: Isothermal,
-    translate_count: Count,
-    phase: Phase,
+    pub microstate: Microstate<BodyProperties, SiteProperties, VecCell<SiteKey, 3>, Boundary>,
+    pub translate_sweep: Sweep<Translate<PositionVector>>,
+    pub hamiltonian: PairwiseCutoff<Isotropic<LennardJones>>,
+    pub quick_insert: QuickInsert<UniformIn<SiteProperties, Boundary>>,
+    pub quick_compress: QuickCompress<Boundary>,
+    pub overlap_penalty_hamiltonian: PairwiseCutoff<Isotropic<Expanded<OverlapPenalty>>>,
+    pub macrostate: Isothermal,
+    pub translate_count: Count,
+    pub phase: Phase,
 }
 
-impl Simulation for LennardJonesModel
-{
+impl Simulation for LennardJonesModel {
     #[inline]
     fn advance(&mut self) -> anyhow::Result<()> {
         if self.microstate.step().is_multiple_of(300) {
@@ -49,9 +51,7 @@ impl Simulation for LennardJonesModel
         }
 
         match self.phase {
-            Phase::Initialize => {
-                self.initialize().context("failed to initialize")?
-            }
+            Phase::Initialize => self.initialize().context("failed to initialize")?,
             Phase::Equilibrate => self.equilibrate(),
         }
 
@@ -68,7 +68,9 @@ impl Simulation for LennardJonesModel
 
 impl LennardJonesModel {
     pub fn new(state_point: StatePoint) -> anyhow::Result<Self> {
-        let macrostate = Isothermal { temperature: state_point.temperature };
+        let macrostate = Isothermal {
+            temperature: state_point.temperature,
+        };
 
         let hamiltonian = PairwiseCutoff(Isotropic {
             interaction: LennardJones {
@@ -81,13 +83,10 @@ impl LennardJonesModel {
         let initial_box_volume = state_point.n as f64 / INITIAL_NUMBER_DENSITY;
         let initial_box_edge_length = initial_box_volume.cbrt();
         let cuboid = Cuboid::with_equal_edges(initial_box_edge_length.try_into()?);
-        let periodic_cuboid =
-            Periodic::new(hamiltonian.maximum_interaction_range(), cuboid)?;
+        let periodic_cuboid = Periodic::new(hamiltonian.maximum_interaction_range(), cuboid)?;
 
         let vec_cell = VecCell::builder()
-            .nominal_search_radius(
-                hamiltonian.maximum_interaction_range().try_into()?,
-            )
+            .nominal_search_radius(hamiltonian.maximum_interaction_range().try_into()?)
             .build();
         let microstate = Microstate::builder()
             .seed(state_point.replicate)
@@ -95,13 +94,11 @@ impl LennardJonesModel {
             .spatial_data(vec_cell)
             .try_build()?;
 
-        let translate =
-            Translate::with_maximum_distance(INITIAL_MAXIMUM_DISTANCE.try_into()?);
+        let translate = Translate::with_maximum_distance(INITIAL_MAXIMUM_DISTANCE.try_into()?);
         let translate_sweep = Sweep(translate);
 
         let target_box_volume = state_point.n as f64 / state_point.number_density;
-        let quick_compress =
-            QuickCompress::with_target_volume(target_box_volume.try_into()?);
+        let quick_compress = QuickCompress::with_target_volume(target_box_volume.try_into()?);
 
         let distribution = UniformIn {
             boundary: microstate.boundary().clone(),
@@ -130,7 +127,6 @@ impl LennardJonesModel {
             phase: Phase::Initialize,
             translate_count: Count::default(),
         })
-
     }
 
     fn initialize(&mut self) -> anyhow::Result<()> {
@@ -179,15 +175,9 @@ impl LennardJonesModel {
     }
 
     fn equilibrate(&mut self) {
-        self.translate_count += self.translate_sweep.apply(
-            &mut self.microstate,
-            &self.hamiltonian,
-            &self.macrostate,
-        );
-    }
-
-    pub fn translate_count(&self) -> &Count {
-        &self.translate_count
+        self.translate_count +=
+            self.translate_sweep
+                .apply(&mut self.microstate, &self.hamiltonian, &self.macrostate);
     }
 
     pub fn clear_move_counts(&mut self) {

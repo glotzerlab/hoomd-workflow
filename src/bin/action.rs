@@ -12,7 +12,7 @@ struct Cli {
     command: Commands,
 
     #[command(flatten)]
-    verbose: Verbosity<InfoLevel>,    
+    verbose: Verbosity<InfoLevel>,
 }
 
 #[derive(Subcommand)]
@@ -36,13 +36,11 @@ fn main() -> anyhow::Result<()> {
     env_logger::Builder::from_env(env_logger::Env::default().default_filter_or(log_level))
         .format_timestamp(None)
         .init();
-    
+
     set_current_dir("workspace").context("error switching to directory `workspace`")?;
 
     match &options.command {
-        Commands::Simulate { directory } => {
-            simulate_one(directory)?
-        }
+        Commands::Simulate { directory } => simulate_one(directory)?,
     }
 
     Ok(())
