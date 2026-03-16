@@ -17,6 +17,7 @@ use super::StatePoint;
 
 const INITIAL_NUMBER_DENSITY: f64 = 0.2;
 const INITIAL_MAXIMUM_DISTANCE: f64 = 0.1;
+const RELAX_STEPS: u64 = 10_000;
 
 type PositionVector = Cartesian<3>;
 type BodyProperties = Point<PositionVector>;
@@ -26,6 +27,7 @@ type Boundary = Periodic<Cuboid>;
 #[derive(Serialize, Deserialize)]
 pub enum Phase {
     Initialize,
+    Relax,
     Equilibrate,
 }
 
@@ -41,6 +43,7 @@ pub struct LennardJonesModel {
     pub macrostate: Isothermal,
     pub translate_count: Count,
     pub phase: Phase,
+    pub relax_step: u64,
 }
 
 impl Simulation for LennardJonesModel {
@@ -52,6 +55,7 @@ impl Simulation for LennardJonesModel {
 
         match self.phase {
             Phase::Initialize => self.initialize().context("failed to initialize")?,
+            Phase::Relax => self.relax(),
             Phase::Equilibrate => self.equilibrate(),
         }
 
@@ -126,6 +130,7 @@ impl LennardJonesModel {
             macrostate,
             phase: Phase::Initialize,
             translate_count: Count::default(),
+            relax_step: 0,
         })
     }
 
@@ -154,7 +159,7 @@ impl LennardJonesModel {
                 &self.macrostate,
             );
 
-            self.phase = Phase::Equilibrate;
+            self.phase = Phase::Relax;
             debug!(
                 "Initialization complete at step {}.",
                 self.microstate.step()
@@ -172,6 +177,27 @@ impl LennardJonesModel {
         }
 
         Ok(())
+    }
+
+    fn relax(&mut self) {
+        self.translate_count +=
+            self.translate_sweep
+                .apply(&mut self.microstate, &self.hamiltonian, &self.macrostate);
+
+        self.relax_step += 1;
+        if self.relax_step == RELAX_STEPS {
+            debug!(
+                "Relax phase complete at step {}, retuning trial moves.",
+                self.microstate.step()
+            );
+            self.translate_sweep.tune_default(
+                &self.microstate,
+                &self.hamiltonian,
+                &self.macrostate,
+            );
+
+            self.phase = Phase::Equilibrate;
+        }
     }
 
     fn equilibrate(&mut self) {
