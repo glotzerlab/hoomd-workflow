@@ -63,7 +63,8 @@ pub fn simulate_one(directory: &Path) -> anyhow::Result<()> {
         .with_context(|| format!("error initializing model in `{}`", directory.display()))?;
     let mut gsd_file = HoomdGsdFile::open("trajectory.in-progress.gsd")
         .context("error opening trajectory.in-progress.gsd")?;
-    let mut parquet_logger = ParquetLogger::<LogRecord>::create_unique("log.parquet")?;
+    let mut parquet_logger = ParquetLogger::<LogRecord>::create_unique("log.parquet")
+        .context("error creating `log.parquet`")?;
     let maybe_wall_time_limit = match env::var("ACTION_WALLTIME_IN_MINUTES") {
         Ok(value) => {
             let parsed_value = value
