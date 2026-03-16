@@ -4,6 +4,7 @@
 /target
 /workspace
 /.signac
+/.row
 
 # Pixi environments
 .pixi/*
