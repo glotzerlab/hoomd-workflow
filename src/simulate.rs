@@ -20,7 +20,7 @@ use crate::{LennardJonesModel, StatePoint};
 
 const MODEL_FILE: &str = "model.postcard";
 const TOTAL_STEPS: u64 = 100_000;
-const GSD_WRITE_PERIOD: u64 = 10_000;
+const GSD_WRITE_PERIOD: u64 = 100_000;
 const LOG_WRITE_PERIOD: u64 = 1_000;
 const WALL_TIME_BUFFER: f64 = 300.0;
 
@@ -48,6 +48,7 @@ fn get_model() -> anyhow::Result<LennardJonesModel> {
 
 #[derive(ParquetRecordWriter)]
 struct LogRecord {
+    step: u64,
     wall_time: f64,
     potential_energy: f64,
     volume: f64,
@@ -96,6 +97,7 @@ pub fn simulate_one(directory: &Path) -> anyhow::Result<()> {
         let wall_time = start.elapsed().as_secs_f64();
         if model.step().is_multiple_of(LOG_WRITE_PERIOD) {
             let log_record = LogRecord {
+                step: model.step(),
                 wall_time,
                 potential_energy: model.hamiltonian.total_energy(&model.microstate),
                 volume: model.microstate.boundary().volume(),
@@ -105,6 +107,8 @@ pub fn simulate_one(directory: &Path) -> anyhow::Result<()> {
             parquet_logger
                 .log(log_record)
                 .context("error writing to log.parquet")?;
+
+            model.clear_move_counts();
         }
 
         if let Some(wall_time_limit) = maybe_wall_time_limit
