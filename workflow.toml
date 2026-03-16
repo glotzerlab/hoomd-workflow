@@ -1,0 +1,13 @@
+[workspace]
+value_file = "signac_statepoint.json"
+
+[default.action]
+command = "target/release/action $ACTION_NAME {directories}"
+launchers = ["rayon"]
+
+[[action]]
+name = "simulate"
+products = ["trajectory.gsd"]
+resources.walltime.per_directory = "01:00:00"
+resources.threads_per_process = 1
+group.maximum_size = 1
