@@ -4,15 +4,15 @@ edition = "2024"
 publish = false
 
 [dependencies]
-hoomd-geometry = { path = "../hoomd-rs/hoomd-geometry", version = "0.0.0"}
-hoomd-gsd = { path = "../hoomd-rs/hoomd-gsd", version = "0.0.0"}
-hoomd-interaction = { path = "../hoomd-rs/hoomd-interaction", version = "0.0.0"}
-hoomd-mc = { path = "../hoomd-rs/hoomd-mc", version = "0.0.0"}
-hoomd-microstate = { path = "../hoomd-rs/hoomd-microstate", version = "0.0.0"}
-hoomd-simulation = { path = "../hoomd-rs/hoomd-simulation", version = "0.0.0"}
-hoomd-spatial = { path = "../hoomd-rs/hoomd-spatial", version = "0.0.0"}
-hoomd-utility = { path = "../hoomd-rs/hoomd-utility", version = "0.0.0"}
-hoomd-vector = { path = "../hoomd-rs/hoomd-vector", version = "0.0.0"}
+hoomd-geometry = "1.0.0"
+hoomd-gsd = "1.0.0"
+hoomd-interaction = "1.0.0"
+hoomd-mc = "1.0.0"
+hoomd-microstate = "1.0.0"
+hoomd-simulation = "1.0.0"
+hoomd-spatial = "1.0.0"
+hoomd-utility = "1.0.0"
+hoomd-vector = "1.0.0"
 
 anyhow = "1.0.100"
 clap = {version = "4.5.48", features = ["derive"]}

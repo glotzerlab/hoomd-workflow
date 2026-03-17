@@ -550,7 +550,9 @@ checksum = "7f24254aa9a54b5c858eaee2f5bccdb46aaf0e486a595ed5fd8f86ba55232a70"
 
 [[package]]
 name = "hoomd-derive"
-version = "0.0.0"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "334812c0bfeeed4e16bea4b0b88c13a06416c579df0aa3bdd558e334948cb820"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -559,7 +561,9 @@ dependencies = [
 
 [[package]]
 name = "hoomd-geometry"
-version = "0.0.0"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "eb4e3d5d0a28f1a20b21d4332a8bb63173f8d185bd515755baf9fc77dc439130"
 dependencies = [
  "hoomd-linear-algebra",
  "hoomd-manifold",
@@ -575,7 +579,9 @@ dependencies = [
 
 [[package]]
 name = "hoomd-gsd"
-version = "0.0.0"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bba3e11c7ead83cee82162a0401796348cee51cf9e923ee3715c155ba11ea070"
 dependencies = [
  "hoomd-vector",
  "itertools",
@@ -585,7 +591,9 @@ dependencies = [
 
 [[package]]
 name = "hoomd-interaction"
-version = "0.0.0"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1622815c746b6fe85964ebe42fb045a89bead084df58257a28214af1fe98f8cb"
 dependencies = [
  "hoomd-derive",
  "hoomd-geometry",
@@ -598,7 +606,9 @@ dependencies = [
 
 [[package]]
 name = "hoomd-linear-algebra"
-version = "0.0.0"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a80c62132b7b7a2a9e8aaac0b10e9bc699403c9be0309f64629a77a3cb3cd024"
 dependencies = [
  "serde",
  "serde_with",
@@ -606,7 +616,9 @@ dependencies = [
 
 [[package]]
 name = "hoomd-manifold"
-version = "0.0.0"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "f0c799c870c479c31934dddd60c580585591a7e1becace5ac182e0ac8015c225"
 dependencies = [
  "approxim",
  "hoomd-utility",
@@ -620,7 +632,9 @@ dependencies = [
 
 [[package]]
 name = "hoomd-mc"
-version = "0.0.0"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7a49e85cca9251be8295ff951b604a7383e13b2ee3f65205efa4fc6f0b597c1b"
 dependencies = [
  "hoomd-geometry",
  "hoomd-interaction",
@@ -641,7 +655,9 @@ dependencies = [
 
 [[package]]
 name = "hoomd-microstate"
-version = "0.0.0"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9a937e201b0122bc624097129791860cf7b03a759f40e4b601f5dcce7f0bdee2"
 dependencies = [
  "arrayvec",
  "hoomd-derive",
@@ -660,7 +676,9 @@ dependencies = [
 
 [[package]]
 name = "hoomd-rand"
-version = "0.0.0"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b64aea48e483dc1c8eed562e4ec7d3da85b457df7af62a927bd6a0b9de88cf4f"
 dependencies = [
  "clap",
  "rand",
@@ -669,7 +687,9 @@ dependencies = [
 
 [[package]]
 name = "hoomd-simulation"
-version = "0.0.0"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c7359305301ecbfdec9abf4cc7b9492e97f511c7b9aff73b9ad0d2bc01832568"
 dependencies = [
  "anyhow",
  "serde",
@@ -677,7 +697,9 @@ dependencies = [
 
 [[package]]
 name = "hoomd-spatial"
-version = "0.0.0"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1a619f0e4869f81dc7a1a1d602140ad578e105b009d0a2dfe8dac5937a11f982"
 dependencies = [
  "hoomd-utility",
  "hoomd-vector",
@@ -689,7 +711,9 @@ dependencies = [
 
 [[package]]
 name = "hoomd-utility"
-version = "0.0.0"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d5ff2ea9526c06ce4e6957eef60599142b13013ce1a392598b3ea14f08207113"
 dependencies = [
  "parquet",
  "parquet_derive",
@@ -699,7 +723,9 @@ dependencies = [
 
 [[package]]
 name = "hoomd-vector"
-version = "0.0.0"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d366a3055935576d438deeafcbac17162c7314b76efa4ef3df90c414c1296a15"
 dependencies = [
  "approxim",
  "hoomd-linear-algebra",
