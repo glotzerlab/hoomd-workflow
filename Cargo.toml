@@ -1,6 +1,7 @@
 [package]
 name = "hoomd-workflow"
 edition = "2024"
+publish = false
 
 [dependencies]
 hoomd-geometry = { path = "../hoomd-rs/hoomd-geometry", version = "0.0.0"}
