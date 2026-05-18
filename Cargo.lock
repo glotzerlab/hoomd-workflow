@@ -543,10 +543,11 @@ dependencies = [
 
 [[package]]
 name = "hoomd-geometry"
-version = "1.0.0"
+version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "eb4e3d5d0a28f1a20b21d4332a8bb63173f8d185bd515755baf9fc77dc439130"
+checksum = "6618d598f5e5dc6407f39a16d47123124d1ded91bbc591609318304d6116b484"
 dependencies = [
+ "arrayvec",
  "hoomd-linear-algebra",
  "hoomd-manifold",
  "hoomd-utility",
@@ -588,9 +589,9 @@ dependencies = [
 
 [[package]]
 name = "hoomd-linear-algebra"
-version = "1.0.0"
+version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a80c62132b7b7a2a9e8aaac0b10e9bc699403c9be0309f64629a77a3cb3cd024"
+checksum = "71cdc3ecd5a9301198375544d900e83603effd4608adb7e2fe50cf8a4cec2d46"
 dependencies = [
  "serde",
  "serde_with",
@@ -598,9 +599,9 @@ dependencies = [
 
 [[package]]
 name = "hoomd-manifold"
-version = "1.0.0"
+version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f0c799c870c479c31934dddd60c580585591a7e1becace5ac182e0ac8015c225"
+checksum = "1aa099cc1284d7ce919742833670b830ea72c6164c8e8ef2707382fc4c66199f"
 dependencies = [
  "approxim",
  "hoomd-utility",
@@ -693,9 +694,9 @@ dependencies = [
 
 [[package]]
 name = "hoomd-utility"
-version = "1.0.0"
+version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d5ff2ea9526c06ce4e6957eef60599142b13013ce1a392598b3ea14f08207113"
+checksum = "9174f96aa110e76dd39c1d61cea1d414ba59d5f0ad3c86a58a4aeb82e552201b"
 dependencies = [
  "parquet",
  "parquet_derive",
@@ -705,9 +706,9 @@ dependencies = [
 
 [[package]]
 name = "hoomd-vector"
-version = "1.0.0"
+version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d366a3055935576d438deeafcbac17162c7314b76efa4ef3df90c414c1296a15"
+checksum = "fbb457e90d8c763336856a2d3b0e8c69219e96b71be92ebafd4a843f8bfd993d"
 dependencies = [
  "approxim",
  "hoomd-linear-algebra",
