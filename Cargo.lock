@@ -562,9 +562,9 @@ dependencies = [
 
 [[package]]
 name = "hoomd-gsd"
-version = "1.0.0"
+version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bba3e11c7ead83cee82162a0401796348cee51cf9e923ee3715c155ba11ea070"
+checksum = "194738a2f9d8d955eef9bbeb78c17345e5e26c744f7ee4f9e5ce1b3902255c0c"
 dependencies = [
  "hoomd-vector",
  "itertools",
