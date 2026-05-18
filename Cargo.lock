@@ -670,9 +670,9 @@ dependencies = [
 
 [[package]]
 name = "hoomd-simulation"
-version = "1.0.0"
+version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c7359305301ecbfdec9abf4cc7b9492e97f511c7b9aff73b9ad0d2bc01832568"
+checksum = "a685958ea35a67a058c30772c798fccc8c6e17ebd7fbf8876b5019908471d6bb"
 dependencies = [
  "anyhow",
  "serde",
