@@ -615,9 +615,9 @@ dependencies = [
 
 [[package]]
 name = "hoomd-mc"
-version = "1.0.0"
+version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7a49e85cca9251be8295ff951b604a7383e13b2ee3f65205efa4fc6f0b597c1b"
+checksum = "cd44f41af499bd71c22965dda67c0443c50543426be61c7837902feee70948e4"
 dependencies = [
  "hoomd-geometry",
  "hoomd-interaction",
@@ -670,9 +670,9 @@ dependencies = [
 
 [[package]]
 name = "hoomd-simulation"
-version = "1.0.0"
+version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c7359305301ecbfdec9abf4cc7b9492e97f511c7b9aff73b9ad0d2bc01832568"
+checksum = "a685958ea35a67a058c30772c798fccc8c6e17ebd7fbf8876b5019908471d6bb"
 dependencies = [
  "anyhow",
  "serde",
