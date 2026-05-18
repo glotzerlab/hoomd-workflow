@@ -532,9 +532,9 @@ checksum = "7f24254aa9a54b5c858eaee2f5bccdb46aaf0e486a595ed5fd8f86ba55232a70"
 
 [[package]]
 name = "hoomd-derive"
-version = "1.0.0"
+version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "334812c0bfeeed4e16bea4b0b88c13a06416c579df0aa3bdd558e334948cb820"
+checksum = "6335254027145db37b0c2e4730a8fd19fc09d17d007fb4ed89c6c33a913e3ae9"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -574,9 +574,9 @@ dependencies = [
 
 [[package]]
 name = "hoomd-interaction"
-version = "1.0.0"
+version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1622815c746b6fe85964ebe42fb045a89bead084df58257a28214af1fe98f8cb"
+checksum = "1cf25901fa05a3444393bec78f037fdbdf6170e194a270f031e422e61c92e78a"
 dependencies = [
  "hoomd-derive",
  "hoomd-geometry",
@@ -638,9 +638,9 @@ dependencies = [
 
 [[package]]
 name = "hoomd-microstate"
-version = "1.0.0"
+version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9a937e201b0122bc624097129791860cf7b03a759f40e4b601f5dcce7f0bdee2"
+checksum = "1840eee7b2094049f581def3345835c37c66bb2b5d870c3000a7a5475b152eb3"
 dependencies = [
  "arrayvec",
  "hoomd-derive",
@@ -659,9 +659,9 @@ dependencies = [
 
 [[package]]
 name = "hoomd-rand"
-version = "1.0.0"
+version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b64aea48e483dc1c8eed562e4ec7d3da85b457df7af62a927bd6a0b9de88cf4f"
+checksum = "18ec706ba9548b9f36abefa6a6cecfb39adea58531172f946b408a76fac7b9fb"
 dependencies = [
  "clap",
  "rand",
@@ -680,9 +680,9 @@ dependencies = [
 
 [[package]]
 name = "hoomd-spatial"
-version = "1.0.0"
+version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1a619f0e4869f81dc7a1a1d602140ad578e105b009d0a2dfe8dac5937a11f982"
+checksum = "c8c90590c25d2d9423456d61b0a402f5d9a06b7fcfae38c1f1651767c3029f38"
 dependencies = [
  "hoomd-utility",
  "hoomd-vector",
