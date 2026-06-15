@@ -698,8 +698,8 @@ version = "1.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9174f96aa110e76dd39c1d61cea1d414ba59d5f0ad3c86a58a4aeb82e552201b"
 dependencies = [
- "parquet",
- "parquet_derive",
+ "parquet 58.3.0",
+ "parquet_derive 58.3.0",
  "serde",
  "thiserror",
 ]
@@ -738,8 +738,8 @@ dependencies = [
  "hoomd-utility",
  "hoomd-vector",
  "log",
- "parquet",
- "parquet_derive",
+ "parquet 59.0.0",
+ "parquet_derive 59.0.0",
  "postcard",
  "serde",
  "serde_json",
@@ -1029,12 +1029,43 @@ dependencies = [
 ]
 
 [[package]]
+name = "parquet"
+version = "59.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "970dff83e97d953c827ae8176f6bf4e9f77bf62daacc01ec5df348ec5eacd913"
+dependencies = [
+ "ahash",
+ "bytes",
+ "chrono",
+ "half",
+ "hashbrown 0.17.1",
+ "num-bigint",
+ "num-integer",
+ "num-traits",
+ "paste",
+ "seq-macro",
+ "twox-hash",
+]
+
+[[package]]
 name = "parquet_derive"
 version = "58.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b9fe4f2cd0b76d71c8be5c1ad2aa398c27a4a33524d3d8c1d8ff1401fe7195a8"
 dependencies = [
- "parquet",
+ "parquet 58.3.0",
+ "proc-macro2",
+ "quote",
+ "syn",
+]
+
+[[package]]
+name = "parquet_derive"
+version = "59.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "24f33a384e5744d8ca335cf38ca0afb86882a2f4830ea449a64002ad14bef998"
+dependencies = [
+ "parquet 59.0.0",
  "proc-macro2",
  "quote",
  "syn",
