@@ -4,15 +4,16 @@ edition = "2024"
 publish = false
 
 [dependencies]
-hoomd-geometry = "1.0.0"
-hoomd-gsd = "1.0.0"
-hoomd-interaction = "1.0.0"
-hoomd-mc = "1.0.0"
-hoomd-microstate = "1.0.0"
-hoomd-simulation = "1.0.0"
-hoomd-spatial = "1.0.0"
-hoomd-utility = "1.0.0"
-hoomd-vector = "1.0.0"
+hoomd-geometry = "1.2.0"
+hoomd-gsd = "1.2.0"
+hoomd-interaction = "1.2.0"
+hoomd-mc = "1.2.0"
+hoomd-md = "1.2.0"
+hoomd-microstate = "1.2.0"
+hoomd-simulation = "1.2.0"
+hoomd-spatial = "1.2.0"
+hoomd-utility = "1.2.0"
+hoomd-vector = "1.2.0"
 
 anyhow = "1.0.100"
 clap = {version = "4.5.48", features = ["derive"]}
