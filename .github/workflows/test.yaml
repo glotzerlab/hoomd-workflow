@@ -25,11 +25,6 @@ jobs:
   test:
     name: Test [rust-${{ matrix.rust }}]
     runs-on: ubuntu-24.04
-    strategy:
-      matrix:
-        rust:
-          - 1.94.0
-
     steps:
     - name: Checkout
       uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
@@ -37,7 +32,7 @@ jobs:
       id: rust_toolchain
       uses: dtolnay/rust-toolchain@efa25f7f19611383d5b0ccf2d1c8914531636bf9
       with:
-        toolchain: ${{ matrix.rust }}
+        toolchain: 1.96.1
     - name: Cache
       uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
       with:
