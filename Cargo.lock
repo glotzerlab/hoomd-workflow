@@ -616,9 +616,9 @@ dependencies = [
 
 [[package]]
 name = "hoomd-linear-algebra"
-version = "1.2.0"
+version = "1.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "92940348445c29cc4c59f518a6660cde87a43e00bfa5a8b59553427e5bd64f3a"
+checksum = "a11a9256fabb64f3cae425f2448c7886a2e70c651cad54f5a9c992e1e659b452"
 dependencies = [
  "serde",
  "serde_with",
@@ -741,9 +741,9 @@ dependencies = [
 
 [[package]]
 name = "hoomd-utility"
-version = "1.2.0"
+version = "1.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1bce85bf4361b726e316738e78039b8ba58be42cd836c7910bc4583cdd7f3611"
+checksum = "c016fb74cd175371b034a580fd8cadcfacc078d058f6b1064be836984e8fa348"
 dependencies = [
  "parquet",
  "parquet_derive",
@@ -753,9 +753,9 @@ dependencies = [
 
 [[package]]
 name = "hoomd-vector"
-version = "1.2.0"
+version = "1.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2fa317b190b4dfc72d0ac74ea1540fed915eed7f1114d4b717437bd014d2a0b4"
+checksum = "fad63e0ff003ce741b3a84362c7c0abf79fc76fb54662cd4b315717e2e76d71f"
 dependencies = [
  "approxim",
  "hoomd-linear-algebra",
