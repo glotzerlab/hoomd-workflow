@@ -2,17 +2,18 @@ use std::{
     env::{self, set_current_dir},
     fs::{self, File},
     io::{self, Write},
-    path::Path,
+    path::{Path, PathBuf},
     time::Instant,
 };
 
-use anyhow::Context;
+use anyhow::{Context, anyhow};
 use hoomd_geometry::Volume;
 use hoomd_gsd::hoomd::HoomdGsdFile;
 use hoomd_interaction::TotalEnergy;
 use hoomd_microstate::AppendMicrostate;
 use hoomd_simulation::Simulation;
 use hoomd_utility::data::ParquetLogger;
+use hoomd_workspace::Entry;
 use log::{debug, info};
 use parquet_derive::ParquetRecordWriter;
 
@@ -24,21 +25,25 @@ const GSD_WRITE_PERIOD: u64 = 100_000;
 const LOG_WRITE_PERIOD: u64 = 1_000;
 const WALL_TIME_BUFFER: f64 = 300.0;
 
-fn get_model() -> anyhow::Result<LennardJonesModel> {
-    match fs::read(MODEL_FILE) {
+fn get_model(directory: &Path) -> anyhow::Result<LennardJonesModel> {
+    let model_file: PathBuf = [Path::new("workspace"), directory, Path::new(MODEL_FILE)]
+        .iter()
+        .collect();
+    match fs::read(&model_file) {
         Ok(bytes) => {
-            debug!("Continuing simulation from `{MODEL_FILE}`.");
+            debug!("Continuing simulation from `{}`.", model_file.display());
 
-            postcard::from_bytes(&bytes).with_context(|| format!("could not read `{MODEL_FILE}`"))
+            postcard::from_bytes(&bytes)
+                .with_context(|| format!("could not read `{}`", model_file.display()))
         }
         Err(error) => match error.kind() {
             io::ErrorKind::NotFound => {
                 debug!("Constructing a new simulation model.");
-                let state_point_bytes = fs::read("signac_statepoint.json")
-                    .context("unable to read `signac_statepoint.json`")?;
-                let state_point: StatePoint = serde_json::from_slice(&state_point_bytes)
-                    .context("could not parse signac_statepoint.json")?;
-                let _ = HoomdGsdFile::create("trajectory.in-progress.gsd");
+                let state_point: StatePoint = hoomd_workspace::state_point(directory)
+                    .context("could not read state point")?
+                    .ok_or(anyhow!("state point not found"))?;
+                let _ =
+                    HoomdGsdFile::create(state_point.path()?.join("trajectory.in-progress.gsd"));
                 LennardJonesModel::new(state_point)
             }
             _ => Err(error).with_context(|| format!("Could not read `{MODEL_FILE}`")),
@@ -57,11 +62,17 @@ struct LogRecord {
 
 pub fn simulate_one(directory: &Path) -> anyhow::Result<()> {
     let start = Instant::now();
-    set_current_dir(directory)
-        .with_context(|| format!("error switching to job directory `{}`", directory.display()))?;
-
-    let mut model = get_model()
+    let mut model = get_model(directory)
         .with_context(|| format!("error initializing model in `{}`", directory.display()))?;
+
+    let job_directory: PathBuf = [Path::new("workspace"), directory].iter().collect();
+    set_current_dir(&job_directory).with_context(|| {
+        format!(
+            "error switching to job directory `{}`",
+            job_directory.display()
+        )
+    })?;
+
     let mut gsd_file = HoomdGsdFile::open("trajectory.in-progress.gsd")
         .context("error opening trajectory.in-progress.gsd")?;
     let mut parquet_logger = ParquetLogger::<LogRecord>::create_unique("log.parquet")

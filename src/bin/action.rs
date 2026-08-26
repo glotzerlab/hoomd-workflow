@@ -1,6 +1,5 @@
-use std::{env::set_current_dir, path::PathBuf};
+use std::path::PathBuf;
 
-use anyhow::Context;
 use clap::{Parser, Subcommand};
 use clap_verbosity_flag::{InfoLevel, Verbosity, log::LevelFilter};
 use hoomd_workflow::simulate_one;
@@ -36,8 +35,6 @@ fn main() -> anyhow::Result<()> {
     env_logger::Builder::from_env(env_logger::Env::default().default_filter_or(log_level))
         .format_timestamp(None)
         .init();
-
-    set_current_dir("workspace").context("error switching to directory `workspace`")?;
 
     match &options.command {
         Commands::Simulate { directory } => simulate_one(directory)?,
