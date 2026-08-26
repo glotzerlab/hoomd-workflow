@@ -741,9 +741,9 @@ dependencies = [
 
 [[package]]
 name = "hoomd-utility"
-version = "1.2.0"
+version = "1.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1bce85bf4361b726e316738e78039b8ba58be42cd836c7910bc4583cdd7f3611"
+checksum = "c016fb74cd175371b034a580fd8cadcfacc078d058f6b1064be836984e8fa348"
 dependencies = [
  "parquet",
  "parquet_derive",
