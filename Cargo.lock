@@ -665,9 +665,9 @@ dependencies = [
 
 [[package]]
 name = "hoomd-md"
-version = "1.2.0"
+version = "1.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0f949fff0ce68a3c5774b373d2991544fe68913ffc2b291cdee6499335bf8577"
+checksum = "a71baddb901c300dd1494838b26a82b325acaaebdb00b04062a9918246c22e3d"
 dependencies = [
  "hoomd-interaction",
  "hoomd-linear-algebra",
