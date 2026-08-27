@@ -5,7 +5,9 @@ use hoomd_interaction::{
     pairwise::Isotropic,
     univariate::{Expanded, LennardJones, OverlapPenalty},
 };
-use hoomd_mc::{Count, QuickCompress, QuickInsert, Sweep, Translate, Trial, Tune, UniformIn};
+use hoomd_mc::{
+    Count, QuickCompress, QuickInsert, Sweep, Translate, Trial, Tune, TuneOptions, UniformIn,
+};
 use hoomd_microstate::{Microstate, SiteKey, boundary::Periodic, property::Point};
 use hoomd_simulation::{Simulation, macrostate::Isothermal};
 use hoomd_spatial::VecCell;
@@ -153,10 +155,11 @@ impl LennardJonesModel {
         );
 
         if self.quick_compress.is_complete() {
-            self.translate_sweep.tune_default(
+            self.translate_sweep.tune_with_options(
                 &self.microstate,
                 &self.hamiltonian,
                 &self.macrostate,
+                &TuneOptions::default(),
             );
 
             self.phase = Phase::Relax;
@@ -190,10 +193,11 @@ impl LennardJonesModel {
                 "Relax phase complete at step {}, retuning trial moves.",
                 self.microstate.step()
             );
-            self.translate_sweep.tune_default(
+            self.translate_sweep.tune_with_options(
                 &self.microstate,
                 &self.hamiltonian,
                 &self.macrostate,
+                &TuneOptions::default(),
             );
 
             self.phase = Phase::Equilibrate;

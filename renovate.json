@@ -6,6 +6,11 @@
   "packageRules": [
     {
       "matchManagers": ["cargo"],
+      "matchPackageNames": ["hoomd-*"],
+      "groupName": "hoomd"
+    },
+    {
+      "matchManagers": ["cargo"],
       "matchPackageNames": ["parquet*"],
       "groupName": "parquet"
     },
