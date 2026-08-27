@@ -1,5 +1,5 @@
 use std::{
-    env::{self, set_current_dir},
+    env,
     fs::{self, File},
     io::{self, Write},
     path::{Path, PathBuf},
@@ -66,17 +66,12 @@ pub fn simulate_one(directory: &Path) -> anyhow::Result<()> {
         .with_context(|| format!("error initializing model in `{}`", directory.display()))?;
 
     let job_directory: PathBuf = [Path::new("workspace"), directory].iter().collect();
-    set_current_dir(&job_directory).with_context(|| {
-        format!(
-            "error switching to job directory `{}`",
-            job_directory.display()
-        )
-    })?;
 
-    let mut gsd_file = HoomdGsdFile::open("trajectory.in-progress.gsd")
+    let mut gsd_file = HoomdGsdFile::open(job_directory.join("trajectory.in-progress.gsd"))
         .context("error opening trajectory.in-progress.gsd")?;
-    let mut parquet_logger = ParquetLogger::<LogRecord>::create_unique("log.parquet")
-        .context("error creating `log.parquet`")?;
+    let mut parquet_logger =
+        ParquetLogger::<LogRecord>::create_unique(job_directory.join("log.parquet"))
+            .context("error creating `log.parquet`")?;
     let maybe_wall_time_limit = match env::var("ACTION_WALLTIME_IN_MINUTES") {
         Ok(value) => {
             let parsed_value = value
@@ -131,7 +126,8 @@ pub fn simulate_one(directory: &Path) -> anyhow::Result<()> {
     }
 
     let out_bytes: Vec<u8> = postcard::to_stdvec(&model)?;
-    let mut file = File::create(MODEL_FILE).context("failed to create `{MODEL_FILE}`")?;
+    let mut file =
+        File::create(job_directory.join(MODEL_FILE)).context("failed to create `{MODEL_FILE}`")?;
     file.write_all(&out_bytes)
         .context("failed to write `{MODEL_FILE}`")?;
 
@@ -139,8 +135,11 @@ pub fn simulate_one(directory: &Path) -> anyhow::Result<()> {
 
     if model.step() == TOTAL_STEPS {
         info!("Simulation complete.");
-        fs::rename("trajectory.in-progress.gsd", "trajectory.gsd")
-            .context("failed to rename `trajectory.in-progress.gsd` to `trajectory.gsd`")?;
+        fs::rename(
+            job_directory.join("trajectory.in-progress.gsd"),
+            job_directory.join("trajectory.gsd"),
+        )
+        .context("failed to rename `trajectory.in-progress.gsd` to `trajectory.gsd`")?;
     }
 
     Ok(())
