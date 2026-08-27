@@ -20,10 +20,11 @@ env:
   CARGO_TERM_COLOR: always
   ROW_COLOR: always
   CLICOLOR: 1
+  RUSTFLAGS: -C target-cpu=x86-64-v2
 
 jobs:
   test:
-    name: Test [rust-${{ matrix.rust }}]
+    name: Test
     runs-on: ubuntu-24.04
     steps:
     - name: Checkout
@@ -37,6 +38,7 @@ jobs:
       uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
       with:
         cache-bin: false
+        prefix-key: x86-64-v2
     - name: Build
       run: cargo build --verbose
 
